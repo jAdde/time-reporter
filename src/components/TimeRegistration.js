@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import DropdownInput from './DropdownInput';
+import TimeTable from './TimeTable';
 import * as _ from 'underscore';
-export interface TimeRegistrationProps {}
-export interface MyState { input: any, startTimes:[], endTimes:[] }
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
-class TimeRegistration extends Component<TimeRegistrationProps, MyState> {
-	constructor(props){
-		super(props);
+class TimeRegistration extends Component {
+	constructor(){
+		super();
 		this.state = {
+			startDate: moment(),
 			input: null,
 			startTimes:null,
-			endTimes:null
+			endTimes:null,
+			weekNum:moment().week()
 		};
 		this.fetchData = this.fetchData.bind(this);
 		this.sortTimes = this.sortTimes.bind(this);
+		this.getWeekNum = this.getWeekNum.bind(this);
 	}
 
 	componentDidMount(){
@@ -22,6 +27,19 @@ class TimeRegistration extends Component<TimeRegistrationProps, MyState> {
 			this.setState({input: data});
 			this.sortTimes();
 		}, 500);
+	}
+
+	handleChange(date) {
+		date = date === null ? this.state.startDate : date;
+		this.setState({
+		  startDate: date,
+		  weekNum: date.week()
+		});
+	}
+
+	isWeekday (date) {
+	const day = date.day()
+	return day !== 0 && day !== 6
 	}
 
 	fetchData() {
@@ -38,6 +56,13 @@ class TimeRegistration extends Component<TimeRegistrationProps, MyState> {
 		return list
 	};
 
+	getWeekNum(){
+		let dateWeek = this.state.startDate;
+		dateWeek.locale('en')
+		let weekNum = dateWeek.week();
+		return weekNum;
+	}
+
 	sortTimes(){
 		let startTimes = null;
 		let endTimes = null;
@@ -49,9 +74,28 @@ class TimeRegistration extends Component<TimeRegistrationProps, MyState> {
 
 	render() {
 		return(
-			<div className="col-lg-8">
-				<DropdownInput input={this.state.startTimes} />
-				<DropdownInput input={this.state.endTimes} />
+			<div className="container col-lg-8">
+			<div className="col-sm-4 pull-right">
+						<DatePicker
+						dateFormat="YYYY-MM-DD"
+						selected={this.state.startDate}
+						onChange={this.handleChange.bind(this)}
+						filterDate={this.isWeekday}
+						locale="en-gb"
+						showWeekNumbers
+						/>
+					</div>
+				<div className="row">
+					<DropdownInput input={this.state.startTimes} />
+					<DropdownInput input={this.state.endTimes} />
+				</div>
+				<div className="row" style={{"marginTop":"15px"}}></div>
+				<div className="clearfix">
+					Vecka {this.state.weekNum}
+					<TimeTable 	weekNum={this.state.weekNum}
+								onChange={this.getWeekNum}
+					/>
+				</div>
 			</div>
 		);
 	}

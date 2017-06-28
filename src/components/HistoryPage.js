@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 
 class HistoryPage extends Component {
-	render() {
+	constructor(){
+		super();
+		this.state = {}
+	}
+  
+  render() {
 		return(
 			<div className="col-sm-9">
 				Hello! HistoryPage

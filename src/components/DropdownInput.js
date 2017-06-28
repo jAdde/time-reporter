@@ -13,6 +13,7 @@ class DropdownInput extends Component<DropdownInputProps, MyState> {
 	};
 	
 	selectInput(e){
+		e.preventDefault();
 		this.setState({selectedInput:e.target.text});
 	}
 
