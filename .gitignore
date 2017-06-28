@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 /data
-/data/diagnostic.data/
+data/*
 
 # testing
 /coverage
