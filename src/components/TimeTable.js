@@ -49,13 +49,13 @@ calcTotal(){
 }
 
 populateTableHeaders(){
-		String.prototype.capitalize = function() {
-			return this.charAt(0).toUpperCase() + this.slice(1);
+		const capitalize = (text) => {
+			return text.charAt(0).toUpperCase() + text.slice(1);
 		};
 		let dayNames = this.state.dayNames;
 		let headers = _.map(dayNames, header => {
 			return(
-				<th className="col-md-2" key={_.uniqueId()}> {header.toString().capitalize()} </th>
+				<th className="col-md-2" key={_.uniqueId()}> {capitalize(header.toString())} </th>
 				)}
 			);
 		return headers;
