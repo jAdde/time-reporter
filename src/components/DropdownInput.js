@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as _ from 'underscore';
 
-export interface DropdownInputProps {input:string}
+export interface DropdownInputProps {input:string, onChange:(x:any) => void }
 export interface MyState {selectedInput:string}
 
 class DropdownInput extends Component<DropdownInputProps, MyState> {
@@ -15,6 +15,7 @@ class DropdownInput extends Component<DropdownInputProps, MyState> {
 	selectInput(e){
 		e.preventDefault();
 		this.setState({selectedInput:e.target.text});
+		this.props.onChange(e.target.text);
 	}
 
 	renderInputList(){

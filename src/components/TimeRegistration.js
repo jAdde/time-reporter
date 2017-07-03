@@ -14,11 +14,15 @@ class TimeRegistration extends Component {
 			input: null,
 			startTimes:null,
 			endTimes:null,
-			weekNum:moment().week()
+			weekNum:moment().week(),
+			startTime: null,
+			endTime: null
 		};
 		this.fetchData = this.fetchData.bind(this);
 		this.sortTimes = this.sortTimes.bind(this);
 		this.getWeekNum = this.getWeekNum.bind(this);
+		this.setStartTime = this.setStartTime.bind(this);
+		this.setEndTime = this.setEndTime.bind(this);
 	}
 
 	componentDidMount(){
@@ -35,6 +39,14 @@ class TimeRegistration extends Component {
 		  startDate: date,
 		  weekNum: date.week()
 		});
+	}
+
+	setStartTime(time:any){
+		this.setState({startTime: time});
+	}
+
+	setEndTime(time:any){
+		this.setState({endTime: time});
 	}
 
 	isWeekday (date) {
@@ -86,12 +98,11 @@ class TimeRegistration extends Component {
 						/>
 					</div>
 				<div className="row">
-					<DropdownInput input={this.state.startTimes} />
-					<DropdownInput input={this.state.endTimes} />
+					<DropdownInput input={this.state.startTimes} onChange={this.setStartTime} />
+					<DropdownInput input={this.state.endTimes} onChange={this.setEndTime} />
 				</div>
 				<div className="row" style={{"marginTop":"15px"}}></div>
 				<div className="clearfix">
-					Vecka {this.state.weekNum}
 					<TimeTable 	weekNum={this.state.weekNum}
 								onChange={this.getWeekNum}
 					/>

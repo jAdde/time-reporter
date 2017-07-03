@@ -1,28 +1,15 @@
 import React, { Component } from 'react';
 import * as _ from 'underscore';
 export interface TimeTableProps {weekNum:any, onChange:(x:any) => void}
-export interface MyState { data:any, input: any, dayNames: [], weekNum:number, days: Object}
-import moment from 'moment';
+export interface MyState { input: any, dayNames: [], weekNum:number}
 
 class TimeTable extends Component<TimeTableProps, MyState> {
 	constructor(props){
 		super(props);
-		let data = {
-			timestamp_date_created: new Date(),
-			timestamp_date_updated: new Date(),
-			first_date_in_week: "2017-06-12",
-			week_num: "24",
-			days: {
-				monday: {"start": "08:00", "end": "17:00", "break": 1 },
-				tuesday: {"start": "08:00", "end": "17:00", "break": 1 },
-				wednesday: {"start": "08:00", "end": "17:00", "break": 1 },
-				thursday: {"start": "07:30", "end": "16:00", "break": 0.5 },
-				friday: {"start": "07:30", "end": "17:00", "break": 0.5 } }
-		}
+		
 		let weekNum = this.props.weekNum;
-		let dayNames = Object.keys(data["days"]);
-		let days = data["days"];
-		this.state = { data:data, dayNames:dayNames,weekNum:weekNum, days:days }
+		let dayNames = ["måndag", "tisdag", "onsdag", "torsdag", "fredag"];
+		this.state = { dayNames:dayNames,weekNum:weekNum }
 	}
 
 onChange(){
@@ -31,18 +18,10 @@ onChange(){
 }
 
 calcTotal(){
-	let totalHours;
 	let dayNames = this.state.dayNames
-	let days = this.state.days;
-
 	let values = _.map(dayNames, d => {
-		let day = d;
-		let startTime = days[day]["start"] !== "" ? moment(days[day]["start"], "HH:mm a") : null;
-		let endTime = days[day]["end"] !== "" ? moment(days[day]["end"], "HH:mm a") : null;
-		let _break = days[day]["break"]
-		totalHours = startTime !== null || endTime !== null ? endTime.diff(startTime, 'hours')-parseFloat(_break,10) : null;
 		return(
-			<th key={_.uniqueId()}> {totalHours} </th>
+			<th key={_.uniqueId()}> 0 </th>
 			)}
 		);
 	return values;
@@ -63,11 +42,9 @@ populateTableHeaders(){
 
 populateRows(val){
 	let dayNames = this.state.dayNames
-	let days = this.state.days;
-	let values = _.map(dayNames, d => {
-		let day = d;
+	let values = _.map(dayNames, () => {
 		return(
-			<td key={_.uniqueId()}> {days[day][val]} </td>
+			<td key={_.uniqueId()}> - </td>
 			)}
 		);
 	return values;
@@ -76,7 +53,7 @@ populateRows(val){
 render() {
 		return(
 			<div className="panel panel-default">
-				<div className="panel-heading"><strong>Vecka {this.props.onChange()} Tidrapport</strong></div>
+				<div className="panel-heading"> Vecka <strong>{this.props.onChange()}</strong></div>
 				<table className="table">
 					<thead>
 						<tr>
@@ -93,19 +70,19 @@ render() {
 						</tr>
 						<tr>
 							<td>
-								End
+								Slut
 							</td>
 							{this.populateRows("end")}
 						</tr>
 						<tr>
 							<td>
-								Break
+								Lunch
 							</td>
 							{this.populateRows("break")}
 						</tr>
 						<tr className="success">
 							<th>
-								Total
+								Summa
 							</th>
 							{this.calcTotal()}
 						</tr>
@@ -114,8 +91,8 @@ render() {
 							<td />
 							<td />
 							<td />
-							<th>Week Total:</th>
-							<td> 40 </td>
+							<th>Totalt för vecka:</th>
+							<td> 0 </td>
 						</tr>
 					</tbody>
 				</table>
