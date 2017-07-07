@@ -41,16 +41,16 @@ class TimeRegistration extends Component {
 		});
 	}
 
-	setStartTime(time:any){
+	setStartTime(time){
 		this.setState({startTime: time});
 	}
 
-	setEndTime(time:any){
+	setEndTime(time){
 		this.setState({endTime: time});
 	}
 
-	isWeekday (date) {
-	const day = date.day()
+	static isWeekday (date) {
+	const day = date.day();
 	return day !== 0 && day !== 6
 	}
 
@@ -60,24 +60,23 @@ class TimeRegistration extends Component {
 			headers: {'Content-type':'application/json'},
 		})
 		.then((response) => response.json())
-		.then((responseJson: any) => {
+		.then((responseJson) => {
 			responseJson.items.forEach((item) => {
 				list.push(item);
 			});
-		})
+		});
 		return list
 	};
 
 	getWeekNum(){
 		let dateWeek = this.state.startDate;
-		dateWeek.locale('en')
-		let weekNum = dateWeek.week();
-		return weekNum;
+		dateWeek.locale('en');
+        return dateWeek.week();
 	}
 
 	sortTimes(){
-		let startTimes = null;
-		let endTimes = null;
+		let startTimes;
+		let endTimes;
 		let list = _.clone(this.state.input);
 		startTimes = list[0].startTimes;
 		endTimes = list[1].endTimes;
@@ -86,22 +85,23 @@ class TimeRegistration extends Component {
 
 	render() {
 		return(
-			<div className="container col-lg-8">
-			<div className="col-sm-4 pull-right">
+			<div className="container col-sm-9">
+				<div className="row">
+					<div className="col-sm-4 col-xs-4 col-lg-4">
 						<DatePicker
-						dateFormat="YYYY-MM-DD"
-						selected={this.state.startDate}
-						onChange={this.handleChange.bind(this)}
-						filterDate={this.isWeekday}
-						locale="en-gb"
-						showWeekNumbers
+							dateFormat="YYYY-MM-DD"
+							selected={this.state.startDate}
+							onChange={this.handleChange.bind(this)}
+							filterDate={TimeRegistration.isWeekday}
+							locale="en-gb"
+							showWeekNumbers
 						/>
 					</div>
-				<div className="row">
+					<div className="row col-xs-10" style={{"marginTop": "10px"}}/>
 					<DropdownInput input={this.state.startTimes} onChange={this.setStartTime} />
 					<DropdownInput input={this.state.endTimes} onChange={this.setEndTime} />
 				</div>
-				<div className="row" style={{"marginTop":"15px"}}></div>
+				<div className="row" style={{"marginTop": "15px"}}/>
 				<div className="clearfix">
 					<TimeTable 	weekNum={this.state.weekNum}
 								onChange={this.getWeekNum}

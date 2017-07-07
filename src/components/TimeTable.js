@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
 import * as _ from 'underscore';
-export interface TimeTableProps {weekNum:any, onChange:(x:any) => void}
-export interface MyState { input: any, dayNames: [], weekNum:number}
 
-class TimeTable extends Component<TimeTableProps, MyState> {
+class TimeTable extends Component {
 	constructor(props){
 		super(props);
-		
+
 		let weekNum = this.props.weekNum;
 		let dayNames = ["måndag", "tisdag", "onsdag", "torsdag", "fredag"];
 		this.state = { dayNames:dayNames,weekNum:weekNum }
 	}
 
-onChange(){
-	let weekNum = this.props.weekNum;
-	this.setState({weekNum:weekNum});
-}
-
 calcTotal(){
-	let dayNames = this.state.dayNames
-	let values = _.map(dayNames, d => {
-		return(
-			<th key={_.uniqueId()}> 0 </th>
-			)}
-		);
-	return values;
+	let dayNames = this.state.dayNames;
+    return _.map(dayNames, d => {
+            return (
+                <th key={_.uniqueId()}> 0 </th>
+            )
+        }
+    );
 }
 
 populateTableHeaders(){
@@ -85,14 +78,6 @@ render() {
 								Summa
 							</th>
 							{this.calcTotal()}
-						</tr>
-						<tr>
-							<td />
-							<td />
-							<td />
-							<td />
-							<th>Totalt för vecka:</th>
-							<td> 0 </td>
 						</tr>
 					</tbody>
 				</table>

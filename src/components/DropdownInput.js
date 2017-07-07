@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import * as _ from 'underscore';
 
-export interface DropdownInputProps {input:string, onChange:(x:any) => void }
-export interface MyState {selectedInput:string}
-
-class DropdownInput extends Component<DropdownInputProps, MyState> {
+class DropdownInput extends Component {
 	constructor(props){
 		super(props);
 		this.state = {selectedInput:''}
@@ -27,7 +24,7 @@ class DropdownInput extends Component<DropdownInputProps, MyState> {
 
 	render() {
 		return(
-			<div className="col-lg-3">
+			<div className="col-xs-5 col-sm-3 col-md-3 col-lg-3">
 				<div className="input-group">
 					<div className="input-group-btn">
 						<button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Välj <span className="caret"></span></button>

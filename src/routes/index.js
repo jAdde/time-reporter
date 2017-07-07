@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+let model = require('../models/timeTable');
 
 router.use(function (req, res, next) {
   console.log('Request URL:', req.originalUrl)
@@ -15,16 +16,17 @@ router.get('/', function(req, res) {
     });
 });
 
-router.get('/test', function(req, res) {
-    res.status(200).json({
-        title: 'test'
+router.get('/insert', (req, res, next) => {
+    model.create({date: Date.now(), start: "08:00", end: "17:00", break: 1}, (err, doc) =>{
+        if (err) return next(err);
+        res.send(doc);
     });
 });
 
-router.get('/getTimes', function(req, res) {
+router.get('/getTimes', (req, res) => {
     res.set({'Access-Control-Allow-Origin':"*"});
-    var db = req.db;
-    db.collection("times").find({}, function(err, items) {
+    let db = req.db;
+    db.collection("times").find({}, (err, items) =>{
           if(err) {
               return console.log('findOne error:', err);
           }

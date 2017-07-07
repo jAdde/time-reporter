@@ -3,29 +3,21 @@ import './App.css';
 import SideBar from './components/SideBar';
 import AppLogo from './components/AppLogo';
 
-let welcomeText = "Välkommen";
 
-let menuBtn =
-    <div className="navbar-header">
-      <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-      <span className="icon-bar"></span>
-      <span className="icon-bar"></span>
-      <span className="icon-bar"></span>
-      </button>
-      <h3 className='navbar-header'>{welcomeText}</h3>
-    </div>;
-
-interface myProps {}
-interface myState {}
-
-class App extends Component<myProps, myState> {
-
+class App extends Component {
   render() {
     return (
         <div>
           <nav className="navbar navbar-inverse visible-xs">
             <div className="container-fluid">
-              {menuBtn}
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span className="icon-bar"/>
+                        <span className="icon-bar"/>
+                        <span className="icon-bar"/>
+                    </button>
+                    <h3 className='navbar-header'>Välkommen</h3>
+                </div>
               <div className="collapse navbar-collapse" id="myNavbar">
                   <SideBar/>
               </div>
@@ -33,14 +25,14 @@ class App extends Component<myProps, myState> {
           </nav>
           <div className="container-fluid">
             <div className="row content">
-              <div className="col-sm-2 sidenav hidden-xs">
-                <h2>{welcomeText}</h2>
+              <div className="col-sm-3 sidenav hidden-xs">
+                <h2>Välkommen</h2>
                 <hr />
                   <SideBar />
                 <br/>
               </div>
               <br/>
-              <div className="col-lg-8">
+              <div className="col-sm-9">
               <AppLogo />
               </div>
               {this.props.children}
