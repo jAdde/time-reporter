@@ -17,7 +17,12 @@ router.get('/', function(req, res) {
 });
 
 router.get('/insert', (req, res, next) => {
-    model.create({date: Date.now(), start: "08:00", end: "17:00", break: 1}, (err, doc) =>{
+    let date = new Date(req.query.date);
+    let startTime = req.query.start;
+    let endTime = req.query.end;
+    let _break = req.query.break;
+
+    model.create({date: date ? date : Date.now(), start: startTime, end: endTime, break: _break}, (err, doc) =>{
         if (err) return next(err);
         res.send(doc);
     });
@@ -26,7 +31,7 @@ router.get('/insert', (req, res, next) => {
 router.get('/getTimes', (req, res) => {
     res.set({'Access-Control-Allow-Origin':"*"});
     let db = req.db;
-    db.collection("times").find({}, (err, items) =>{
+    db.collection("timetables").find({}, (err, items) =>{
           if(err) {
               return console.log('findOne error:', err);
           }
