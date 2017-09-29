@@ -23,6 +23,8 @@ class TimeRegistration extends Component {
         this.getWeekNum = this.getWeekNum.bind(this);
         this.setStartTime = this.setStartTime.bind(this);
         this.setEndTime = this.setEndTime.bind(this);
+        this.fetchData = this.fetchData.bind(this);
+        this.temptest = this.temptest.bind(this);
     }
 
     componentDidMount() {
@@ -68,6 +70,11 @@ class TimeRegistration extends Component {
         return list
     };
 
+    temptest(){
+        let l = this.fetchData();
+        console.log(l);
+    }
+
     getWeekNum() {
         let dateWeek = this.state.startDate;
         dateWeek.locale('en');
@@ -111,6 +118,8 @@ class TimeRegistration extends Component {
                                onChange={this.getWeekNum}
                     />
                 </div>
+
+                <input type="button" onClick={this.temptest} />
             </div>
         );
     }
